@@ -159,7 +159,6 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
 	[self.tableView endUpdates];
-    [self.tableView reloadData];
 }
 
 #pragma mark - Private methods
