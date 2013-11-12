@@ -14,13 +14,14 @@ To use FTSCoreDataSource, simply add `FTSCoreDataSource.h` and `FTSCoreDataSourc
         cell.textLabel.text = model.someField;
     };
 
-    FTSCoreDataSource *ds = [[FTSCoreDataSource alloc] initWithManagedObjectContext:self.managedObjectContext
-                                                                          tableView:self.tableView
-                                                                         entityName:@"MyModel"
-                                                                            sortKey:@"someFieldToSortBy"
-                                                                          cacheName:nil
-                                                                     cellIdentifier:@"MyModelCell"
-                                                                 configureCellBlock:configureCell];
+    FTSCoreDataSource *ds = [[FTSCoreDataSource alloc]
+                                initWithManagedObjectContext:self.managedObjectContext
+                                                   tableView:self.tableView
+                                                  entityName:@"MyModel"
+                                                     sortKey:@"someFieldToSortBy"
+                                                   cacheName:nil
+                                              cellIdentifier:@"MyModelCell"
+                                          configureCellBlock:configureCell];
 
     self.tableView.dataSource = ds;
 }
