@@ -55,6 +55,10 @@
     return self;
 }
 
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"sortAscending"];
+}
+
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
