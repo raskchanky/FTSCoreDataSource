@@ -68,8 +68,6 @@
         [self assignSortDescriptorsToFetchRequest:self.fetchedResultsController.fetchRequest];
         [self performFetch];
         [self.tableView reloadData];
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
