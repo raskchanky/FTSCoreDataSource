@@ -22,8 +22,6 @@ To use FTSCoreDataSource, simply add `FTSCoreDataSource.h` and `FTSCoreDataSourc
                                                    cacheName:nil
                                               cellIdentifier:@"MyModelCell"
                                           configureCellBlock:configureCell];
-
-    self.tableView.dataSource = ds;
 }
 ```
 
