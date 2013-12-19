@@ -47,11 +47,12 @@
         self.configureCellBlock = configureCellBlock;
         self.sortAscending = YES;
         self.fetchedResultsController = [self setupFetchedResultsController];
+        tableView.dataSource = self;
     }
-
+    
     [self addObserver:self forKeyPath:@"sortAscending" options:NSKeyValueObservingOptionNew context:NULL];
     [self performFetch];
-
+    
     return self;
 }
 
