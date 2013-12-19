@@ -36,7 +36,7 @@
                 configureCellBlock:(TableViewCellConfigureBlock)configureCellBlock
 {
     self = [super init];
-
+    
     if (self) {
         self.managedObjectContext = managedObjectContext;
         self.tableView = tableView;
@@ -76,11 +76,16 @@
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:self.entityName];
     [self assignSortDescriptorsToFetchRequest:fetchRequest];
-
+    fetchRequest.fetchBatchSize = 40;
+    
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:self.cacheName];
-
+    
     fetchedResultsController.delegate = self;
     return fetchedResultsController;
+}
+
+- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 #pragma mark UITableViewDataSource methods
@@ -125,7 +130,7 @@
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
-
+            
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -139,23 +144,23 @@
       newIndexPath:(NSIndexPath *)newIndexPath
 {
     UITableView *tableView = self.tableView;
-
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-
+            
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-
+            
         case NSFetchedResultsChangeUpdate: {
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             id item = [self objectAtIndexPath:indexPath];
             self.configureCellBlock(cell, item);
             break;
         }
-
+            
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
@@ -171,17 +176,13 @@
 
 - (void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath {
     [self.managedObjectContext deleteObject:[self objectAtIndexPath:indexPath]];
-
+    
     NSError *error = nil;
     [self.managedObjectContext save:&error];
-
+    
     if (error) {
         NSLog(@"Deletion of object at index path %@ failed! %@", indexPath, error);
     }
-}
-
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 - (void)assignSortDescriptorsToFetchRequest:(NSFetchRequest *)fetchRequest {
@@ -192,7 +193,7 @@
 - (void)performFetch {
     NSError *error = nil;
 	[self.fetchedResultsController performFetch:&error];
-
+    
     if (error) {
         NSLog(@"Fetch failed! %@", error);
     }

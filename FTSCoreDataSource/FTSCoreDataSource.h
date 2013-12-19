@@ -19,4 +19,6 @@ typedef void (^TableViewCellConfigureBlock)(id cell, id item);
                          cacheName:(NSString *)cacheName
                     cellIdentifier:(NSString *)cellIdentifier
                 configureCellBlock:(TableViewCellConfigureBlock)configureCellBlock;
+
+- (id)objectAtIndexPath:(NSIndexPath *)indexPath;
 @end
