@@ -68,7 +68,6 @@
     if ([keyPath isEqualToString:@"sortAscending"]) {
         [self assignSortDescriptorsToFetchRequest:self.fetchedResultsController.fetchRequest];
         [self performFetch];
-        [self.tableView reloadData];
     }
 }
 
