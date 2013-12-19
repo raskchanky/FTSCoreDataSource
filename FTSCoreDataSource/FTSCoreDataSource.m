@@ -101,9 +101,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellIdentifier
-                                                            forIndexPath:indexPath];
-
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellIdentifier];
     id item = [self objectAtIndexPath:indexPath];
     self.configureCellBlock(cell, item);
     return cell;
